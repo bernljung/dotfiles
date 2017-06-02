@@ -13,6 +13,7 @@ set laststatus=2
 set hlsearch
 set incsearch
 set clipboard=unnamed
+set timeoutlen=1000 ttimeoutlen=0
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -59,9 +60,6 @@ vnoremap <S-Tab> <<
 inoremap { {<CR>}<Esc>ko
 
 set autoread
-
-" For local replace
-nnoremap gr gd[{V%:s/<C-R>//gc<left><left><left>
 
 " For global replace
 nnoremap gR * :%s/<C-R>///gc<left><left><left>
