@@ -1,0 +1,64 @@
+" Author Jimmy Bernljung
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set t_Co=256   " This is may or may not needed.
+
+set background=light
+syntax on
+colorscheme PaperColor
+set number
+set laststatus=2
+set hlsearch
+set incsearch
+set clipboard=unnamed
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+Plugin 'pangloss/vim-javascript.vim'
+
+" All of your Plugins must be added before the following line
+call vundle#end()  
+filetype plugin indent on
+
+" scroll with mouse wheel
+set mouse=a
+
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
+
+"NERDTree
+map <C-b> :NERDTreeToggle<CR>
+set backspace=indent,eol,start
+
+
+" Jump between splits
+" map <C-S-H> <C-W>>
+" map <C-S-L> <C-W><
+
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Autocomplete brackets
+inoremap { {<CR>}<Esc>ko
+
+set autoread
+
+" For local replace
+nnoremap gr gd[{V%:s/<C-R>//gc<left><left><left>
+
+" For global replace
+nnoremap gR * :%s/<C-R>///gc<left><left><left>
