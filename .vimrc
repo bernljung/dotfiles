@@ -42,15 +42,18 @@ set expandtab
 map <C-b> :NERDTreeToggle<CR>
 set backspace=indent,eol,start
 
-
 " Jump between splits
-" map <C-S-H> <C-W>>
-" map <C-S-L> <C-W><
-
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" Use tab
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+inoremap <S-Tab> <C-d>
+vnoremap <Tab> >>
+vnoremap <S-Tab> <<
 
 " Autocomplete brackets
 inoremap { {<CR>}<Esc>ko
