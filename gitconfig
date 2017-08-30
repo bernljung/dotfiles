@@ -1,0 +1,62 @@
+[user]
+	name = Jimmy Bernljung
+	email = jimmy.bernljung@gmail.com
+[merge]
+	tool = vimdiff
+[core]
+	excludesfile = ~/.gitignore_global
+    editor = vim
+[color]
+	ui = auto
+[color "branch"]
+	current = red
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+	cp = cherry-pick
+	cps = cherry-pick -s
+	slog = log --pretty=oneline --abbrev-commit
+	glog = log --graph --decorate --pretty=oneline --abbrev-commit
+	gloga = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	unci = reset HEAD^
+	uncommit = reset HEAD^
+	ls = ls-files
+	out = log HEAD..origin
+	killbranches = !git branch | grep -v master | xargs git branch -d 2> /dev/null
+	sync = !git pull && git push
+	comerge = "!x() { target=`git symbolic-ref HEAD`; git co $1; git merge $target; }; x"
+    unstage = reset HEAD --
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	last = log -1 HEAD
+    gl = log --all --graph --pretty=oneline --decorate --abbrev-commit
+[instaweb]
+	httpd=webrick
+[push]
+	default=current
+[branch]
+	autosetupmerge = true
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[credential]
+	helper = osxkeychain
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[web]
+	browser = open
+[init]
+	templatedir = ~/.git_template
