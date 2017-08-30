@@ -3,7 +3,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set t_Co=256   " This is may or may not needed.
+set t_Co=256   " This is may or may not needed.
 
 set background=light
 syntax on
@@ -14,6 +14,9 @@ set hlsearch
 set incsearch
 set clipboard=unnamed
 set timeoutlen=1000 ttimeoutlen=0
+
+:highlight ExtraWhitespace ctermbg=red guibg=red
+:match ExtraWhitespace /\s\+$/
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -26,17 +29,17 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'pangloss/vim-javascript.vim'
 
 " All of your Plugins must be added before the following line
-call vundle#end()  
+call vundle#end()
 filetype plugin indent on
 
 " scroll with mouse wheel
 set mouse=a
 
-" show existing tab with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" On pressing tab, insert 4 spaces
+" show existing tab with 2 spaces width
+set tabstop=2
+" when indenting with '>', use 2 spaces width
+set shiftwidth=2
+" On pressing tab, insert 2 spaces
 set expandtab
 
 "NERDTree
@@ -63,3 +66,5 @@ set autoread
 
 " For global replace
 nnoremap gR * :%s/<C-R>///gc<left><left><left>
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
