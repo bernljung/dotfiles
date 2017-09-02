@@ -1,0 +1,11 @@
+#!/bin/bash
+
+/usr/local/bin/docker run \
+  --env-file ~/.docker_env \
+  -v $PWD:$PWD \
+  -v /Users/jimmy:/Users/jimmy \
+  -v /Users/jimmy/.aws:/root/.aws \
+  -ti \
+  --rm \
+  -w $PWD \
+  ${AWS_IMAGE} aws "$@"
