@@ -1,0 +1,11 @@
+#!/bin/bash
+
+/usr/local/bin/docker run \
+  --env-file ~/.docker_env \
+  -v $PWD:$PWD \
+  -v /usr/local/lib/npm-global:/usr/local/lib/npm-global \
+  -v /Users/jimmy/.npmrc:/root/.npmrc \
+  -ti \
+  --rm \
+  -w $PWD \
+  ${NODE_IMAGE} npm "$@"
