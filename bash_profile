@@ -13,7 +13,7 @@ export LC_ALL=
 set -a
 . ~/.docker_env
 set +a
-export PATH=/usr/local/lib/npm-global/bin:$PATH
+export PATH=/usr/local/lib/npm-global/bin:/Users/jimmy/Go/bin/darwin_amd64:$PATH
 export NODE_PATH=/usr/local/lib/npm-global/lib/node_modules:$NODE_PATH
 
 alias vim="nvim"
