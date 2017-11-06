@@ -1,0 +1,7 @@
+NODE_IMAGE="node:8-alpine"
+GOLANG_IMAGE="golang:1.8"
+ELIXIR_IMAGE="elixir:1.5"
+ERLANG_IMAGE="erlang:20"
+PHP_IMAGE="php:5-alpine"
+COMPOSER_IMAGE="composer:1.5"
+POSTGRES_IMAGE="postgres:10-alpine"
