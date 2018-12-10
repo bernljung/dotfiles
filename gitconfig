@@ -46,12 +46,13 @@
 [push]
 	default=current
 [branch]
-	autosetupmerge = true
+	autosetupmerge = always
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
 [credential]
-	helper = osxkeychain
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f

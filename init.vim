@@ -1,17 +1,17 @@
 " Author Jimmy Bernljung
-let g:python2_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+" let g:python2_host_prog = '/usr/local/bin/python'
+" let g:python3_host_prog = '/usr/local/bin/python3'
 
 call plug#begin('~/.vim/plugged')
 
   " Utility
   Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    let $FZF_DEFAULT_COMMAND = 'ag -g ""'
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
-  Plug 'wikitopian/hardmode'
   Plug 'qpkorr/vim-bufkill'
   Plug 'gilsondev/searchtasks.vim'
   Plug 'ervandew/supertab'
@@ -32,7 +32,9 @@ call plug#begin('~/.vim/plugged')
     let g:syntastic_always_populate_loc_list = 1
     let g:syntastic_auto_loc_list = 1
     let g:syntastic_check_on_open = 1
-    let g:syntastic_check_on_wq = 0
+    let g:syntastic_check_on_wq = 1
+
+    nnoremap <C-e> :lne <Enter>
 
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     let g:deoplete#enable_at_startup = 1
@@ -67,14 +69,17 @@ call plug#begin('~/.vim/plugged')
   Plug 'beigebrucewayne/skull-vim'
   Plug 'joshdick/onedark.vim'
   Plug 'john2x/flatui.vim'
+  Plug 'morhetz/gruvbox'
+  Plug 'chriskempson/base16-vim'
 call plug#end()
 
 let g:gitgutter_eager = 0
 
+set guioptions= " Remove scrollbaro
+set encoding=utf-8
 set guifont=Hasklug_Nerd_Font:h12
 set background=dark
-colorscheme solarized
-set encoding=utf-8
+colorscheme onedark
 let mapleader=" "
 set backspace=2   " Backspace deletes like most programs in insert mode
 set nobackup
@@ -157,6 +162,14 @@ nmap <Leader>f :Ag <C-r>=expand('<cword>') <CR><CR>
 
 nmap <A-w> :BD!<CR>
 
+" Move line
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
 " Resize window
 tnoremap <C-a>J <C-\><C-N> :res +5<Enter>
 tnoremap <C-a>K <C-\><C-N> :res -5<Enter>
@@ -179,9 +192,15 @@ tnoremap <C-w>/ <C-\><C-N>:vsplit<Enter><C-w>l
 inoremap <C-w>/ <C-\><C-N>:vsplit<Enter><C-w>l
 nnoremap <C-w>/ :vsplit<Enter><C-w>l
 
+nnoremap <Leader><Enter> @:
+
 "NERDTree
 map <C-t> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+" enable line numbers
+let NERDTreeShowLineNumbers=1
+" make sure relative line numbers are used
+autocmd FileType nerdtree setlocal relativenumber
 
 " Always enter terminals in insert mode
 autocmd BufWinEnter,WinEnter term://* startinsert
@@ -209,11 +228,13 @@ nnoremap gR :%s/<C-R>///gc<left><left><left>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
 
 " Airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline_theme='hybrid'
-let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1
+if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+  let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline_theme = 'gruvbox'
 
 " Syntastic Configuration
 " set statusline+=%#warningmsg#
@@ -226,4 +247,4 @@ let g:syntastic_check_on_open = 1
 
 " Neomake settings
 " autocmd! BufWritePost * Neomake
-" let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']
+let g:neomake_elixir_enabled_makers = ['mix', 'credo', 'dogma']

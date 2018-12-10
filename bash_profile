@@ -13,20 +13,19 @@ export LC_ALL=
 set -a
 . ~/.docker_images
 set +a
-export PATH=/usr/local/lib/npm-global/bin:/Users/jimmy/Go/bin/darwin_amd64:$PATH
+export PATH=/usr/local/lib/npm-global/bin:/Users/jimmy/Go/bin/darwin_amd64:/Users/jimmy/Library/Python/3.6/bin:$PATH
 export GOPATH=$HOME
 export NODE_PATH=/usr/local/lib/npm-global/lib/node_modules:$NODE_PATH
 export LOCALSTACK_HOSTNAME=172.17.0.1
-export DOCKER_BRIDGE_IP=172.17.0.1
 export EXERCISM_ROOT=/Users/jimmy/Projects/exercism
 
-alias vim="mvim"
+
 alias c="code"
-alias ls="ls -G"
-alias dockerlink="ln -s /Users/jimmy/Projects/dockerfiles/run.sh"
+alias ls='ls -GFh'
 alias grep='grep --color=auto'
-#alias node="docker run -v $PWD:/opt -ti -w /opt node:6.10-slim node"
-#alias npm="docker run -v $PWD:/opt /usr/local/lib/node_modules:/usr/local/lib/node_modules -ti -w /opt node:6.10-slim npm"
+
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export CLICOLOR=1
 
 # Git branch in prompt.
 parse_git_branch() {
