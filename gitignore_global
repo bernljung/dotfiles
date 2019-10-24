@@ -2,3 +2,6 @@
 node_modules
 *.zip
 .vscode
+_build
+deps
+.formatter.exs
