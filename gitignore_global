@@ -5,3 +5,4 @@ node_modules
 _build
 deps
 .formatter.exs
+*codeStyleConfig.xml
