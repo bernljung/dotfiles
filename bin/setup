@@ -2,6 +2,24 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+DOTNET_BIN="$HOME/.dotnet/dotnet"
+
+have_cmd() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+link_file() {
+  local source="$1"
+  local target="$2"
+
+  ln -sfn "$source" "$target"
+  echo "Linked $target -> $source"
+}
+
+dotnet_sdk_installed() {
+  local major="$1"
+  [[ -x "$DOTNET_BIN" ]] && "$DOTNET_BIN" --list-sdks | awk '{ print $1 }' | grep -q "^${major}\\."
+}
 
 # Create the user-owned directories referenced by .zshrc and the linked configs.
 mkdir -p \
@@ -9,26 +27,22 @@ mkdir -p \
   "$HOME/.config/helix" \
   "$HOME/.dotnet" \
   "$HOME/.dotnet/tools" \
+  "$HOME/.opencode/bin" \
   "$HOME/go" \
   "$HOME/go/bin" \
+  "$HOME/Downloads" \
   "$HOME/Library/Application Support/lazygit" \
   "$HOME/Library/Python/3.11/bin"
 
-# Link the tracked shell, Ghostty, Helix, and Lazygit configs into the home directory.
-ln -sfn "$REPO_ROOT/.zshrc" "$HOME/.zshrc"
-ln -sfn "$REPO_ROOT/.config/ghostty/config" "$HOME/.config/ghostty/config"
-ln -sfn "$REPO_ROOT/.config/helix/config.toml" "$HOME/.config/helix/config.toml"
-ln -sfn "$REPO_ROOT/.config/helix/languages.toml" "$HOME/.config/helix/languages.toml"
-ln -sfn "$REPO_ROOT/Library/Application Support/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
-
-echo "Linked .zshrc -> $HOME/.zshrc"
-echo "Linked Ghostty config -> $HOME/.config/ghostty/config"
-echo "Linked Helix config -> $HOME/.config/helix/config.toml"
-echo "Linked Helix languages -> $HOME/.config/helix/languages.toml"
-echo "Linked Lazygit config -> $HOME/Library/Application Support/lazygit/config.yml"
+# Link tracked configs into place.
+link_file "$REPO_ROOT/.zshrc" "$HOME/.zshrc"
+link_file "$REPO_ROOT/.config/ghostty/config" "$HOME/.config/ghostty/config"
+link_file "$REPO_ROOT/.config/helix/config.toml" "$HOME/.config/helix/config.toml"
+link_file "$REPO_ROOT/.config/helix/languages.toml" "$HOME/.config/helix/languages.toml"
+link_file "$REPO_ROOT/Library/Application Support/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
 
 # Install Homebrew if it is not already available.
-if ! command -v brew >/dev/null 2>&1; then
+if ! have_cmd brew; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
@@ -39,20 +53,19 @@ elif [[ -x /usr/local/bin/brew ]]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-# Install Git, Helix, Lazygit, and wget from Homebrew if any are not already available.
-if ! command -v git >/dev/null 2>&1 || ! command -v hx >/dev/null 2>&1 || ! command -v lazygit >/dev/null 2>&1 || ! command -v wget >/dev/null 2>&1; then
-  brew install git helix lazygit wget
+# Install required Homebrew packages.
+typeset -a missing_brew_packages=()
+have_cmd git || missing_brew_packages+=(git)
+have_cmd hx || missing_brew_packages+=(helix)
+have_cmd lazygit || missing_brew_packages+=(lazygit)
+have_cmd wget || missing_brew_packages+=(wget)
+
+if (( ${#missing_brew_packages[@]} > 0 )); then
+  brew install "${missing_brew_packages[@]}"
 fi
 
 # Install .NET SDK 8 and 10 into ~/.dotnet using Microsoft's install script.
-DOTNET_BIN="$HOME/.dotnet/dotnet"
-dotnet_sdk_installed() {
-  local major="$1"
-  [[ -x "$DOTNET_BIN" ]] && "$DOTNET_BIN" --list-sdks | awk '{ print $1 }' | grep -q "^${major}\."
-}
-
 if ! dotnet_sdk_installed 8 || ! dotnet_sdk_installed 10; then
-  mkdir -p "$HOME/Downloads"
   (
     cd "$HOME/Downloads"
     wget -O dotnet-install.sh https://dot.net/v1/dotnet-install.sh
@@ -69,7 +82,7 @@ if ! dotnet_sdk_installed 8 || ! dotnet_sdk_installed 10; then
 fi
 
 # Install Pi if it is not already available on this machine.
-if ! command -v pi >/dev/null 2>&1; then
+if ! have_cmd pi; then
   curl -fsSL https://pi.dev/install.sh | bash
 fi
 
