@@ -61,6 +61,7 @@ fi
 
 # Install required Homebrew packages.
 typeset -a missing_brew_packages=()
+have_cmd colima || missing_brew_packages+=(colima)
 have_cmd git || missing_brew_packages+=(git)
 have_cmd hx || missing_brew_packages+=(helix)
 have_cmd lazygit || missing_brew_packages+=(lazygit)
