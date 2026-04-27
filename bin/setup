@@ -28,6 +28,8 @@ mkdir -p \
   "$HOME/.dotnet" \
   "$HOME/.dotnet/tools" \
   "$HOME/.opencode/bin" \
+  "$HOME/.pi/agent" \
+  "$HOME/.pi/skills/grill-me" \
   "$HOME/go" \
   "$HOME/go/bin" \
   "$HOME/Downloads" \
@@ -39,6 +41,10 @@ link_file "$REPO_ROOT/.zshrc" "$HOME/.zshrc"
 link_file "$REPO_ROOT/.config/ghostty/config" "$HOME/.config/ghostty/config"
 link_file "$REPO_ROOT/.config/helix/config.toml" "$HOME/.config/helix/config.toml"
 link_file "$REPO_ROOT/.config/helix/languages.toml" "$HOME/.config/helix/languages.toml"
+link_file "$REPO_ROOT/.pi/agent/AGENTS.md" "$HOME/.pi/agent/AGENTS.md"
+link_file "$REPO_ROOT/.pi/agent/settings.json" "$HOME/.pi/agent/settings.json"
+link_file "$REPO_ROOT/.pi/agent/models.json" "$HOME/.pi/agent/models.json"
+link_file "$REPO_ROOT/.pi/skills/grill-me/SKILL.md" "$HOME/.pi/skills/grill-me/SKILL.md"
 link_file "$REPO_ROOT/Library/Application Support/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
 
 # Install Homebrew if it is not already available.
