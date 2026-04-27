@@ -1,10 +1,10 @@
 [user]
 	name = Jimmy Bernljung
-	email = jimmy.bernljung@gmail.com
+	email = jimmy.bernljung@bontuch.com
 [merge]
 	tool = vimdiff
 [core]
-	excludesfile = /Users/jimmybernljung/.gitignore_globa
+	excludesfile = /Users/jimmybernljung/.gitignore_global
     editor = vim
 [color]
 	ui = auto
@@ -68,3 +68,5 @@
 	trustExitCode = true
 [pull]
 	rebase = false
+[init]
+	defaultBranch = main

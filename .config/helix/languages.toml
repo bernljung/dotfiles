@@ -1,0 +1,22 @@
+[[language]]
+name = "c-sharp"
+language-servers = ["csharp-ls"]
+# timeout = 120
+
+[language.debugger]
+name = "vsdbg"
+transport = "stdio"
+command = "/opt/homebrew/bin/vsdbg"
+args = ["--interpreter=vscode", "--engineLogging=/tmp/vsdbg-helix.log"]
+
+# [[language.debugger.templates]]
+# name = "launch"
+# request = "launch"
+# completion = [{ name = "path to dll", completion = "filename" }]
+# args = { program = "{0}", cwd = "/Users/jimmybernljung/Projects/Bontouch/essity/SmartCare/Essity.Mary.WebApi/src/Essity.Mary.WebApi", console = "internalConsole", internalConsoleOptions = "openOnSessionStart", stopAtEntry = false }
+
+[[language.debugger.templates]]
+name = "attach"
+request = "attach"
+completion = ["pid"]
+args = { processId = "{0}" }

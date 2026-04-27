@@ -1,0 +1,189 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+TARGET_LEFT_WIDTH="${TARGET_LEFT_WIDTH:-100}"
+PROBE_AMOUNT="${CMUX_SPLIT_PROBE_AMOUNT:-48}"
+
+get_local_width() {
+  local width
+  width="$(stty size 2>/dev/null | awk '{ print $2 }')"
+
+  if [[ -z "$width" || ! "$width" =~ ^[0-9]+$ ]]; then
+    echo "Could not determine pane width from stty size." >&2
+    exit 1
+  fi
+
+  printf '%s\n' "$width"
+}
+
+get_surface_width() {
+  local surface="$1"
+  local marker output width cmd
+
+  marker="__CMUX_WIDTH_${RANDOM}_${RANDOM}__"
+  cmd=" printf '%s %s\n' '$marker' \"\$(stty size 2>/dev/null | awk '{ print \$2 }')\""
+
+  cmux send --workspace "$CMUX_WORKSPACE_ID" --surface "$surface" "$cmd" >/dev/null
+  cmux send-key --workspace "$CMUX_WORKSPACE_ID" --surface "$surface" Enter >/dev/null
+
+  for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+    output="$(cmux read-screen --workspace "$CMUX_WORKSPACE_ID" --surface "$surface" --lines 80)"
+    width="$(printf '%s\n' "$output" | awk -v marker="$marker" '$1 == marker && $2 ~ /^[0-9]+$/ { print $2 }' | tail -n1)"
+
+    if [[ -n "$width" && "$width" =~ ^[0-9]+$ ]]; then
+      printf '%s\n' "$width"
+      return 0
+    fi
+
+    sleep 0.02
+  done
+
+  echo "Could not determine width for $surface." >&2
+  exit 1
+}
+
+resize_pane() {
+  local pane="$1"
+  local direction="$2"
+  local amount="$3"
+
+  if (( amount <= 0 )); then
+    return 0
+  fi
+
+  cmux resize-pane \
+    --workspace "$CMUX_WORKSPACE_ID" \
+    --pane "$pane" \
+    "$direction" \
+    --amount "$amount" >/dev/null
+}
+
+abs() {
+  local value="$1"
+  if (( value < 0 )); then
+    printf '%s\n' "$(( -value ))"
+  else
+    printf '%s\n' "$value"
+  fi
+}
+
+pick_resize_target() {
+  local diff="$1"
+
+  if (( diff > 0 )); then
+    RESIZE_PANE_ID="$left_pane"
+    RESIZE_DIRECTION="-R"
+  else
+    RESIZE_PANE_ID="$right_pane"
+    RESIZE_DIRECTION="-L"
+  fi
+}
+
+measure_left_width() {
+  LEFT_WIDTH="$(get_surface_width "$left_surface")"
+  LEFT_DIFF=$(( TARGET_LEFT_WIDTH - LEFT_WIDTH ))
+  LEFT_ABS_DIFF="$(abs "$LEFT_DIFF")"
+}
+
+resize_instant() {
+  local probe_amount previous_left_width moved remaining_diff remaining_abs correction_amount
+
+  measure_left_width
+  if (( LEFT_ABS_DIFF <= 1 )); then
+    return 0
+  fi
+
+  pick_resize_target "$LEFT_DIFF"
+
+  probe_amount="$PROBE_AMOUNT"
+  if (( probe_amount < 1 )); then
+    probe_amount=1
+  fi
+
+  previous_left_width="$LEFT_WIDTH"
+  resize_pane "$RESIZE_PANE_ID" "$RESIZE_DIRECTION" "$probe_amount"
+  measure_left_width
+
+  moved=$(( LEFT_WIDTH - previous_left_width ))
+  moved="$(abs "$moved")"
+
+  if (( moved == 0 )); then
+    return 0
+  fi
+
+  remaining_diff="$LEFT_DIFF"
+  remaining_abs="$(abs "$remaining_diff")"
+  if (( remaining_abs <= 1 )); then
+    return 0
+  fi
+
+  pick_resize_target "$remaining_diff"
+  correction_amount=$(( (remaining_abs * probe_amount + moved - 1) / moved ))
+  if (( correction_amount < 1 )); then
+    correction_amount=1
+  fi
+
+  resize_pane "$RESIZE_PANE_ID" "$RESIZE_DIRECTION" "$correction_amount"
+}
+
+if ! command -v cmux >/dev/null 2>&1; then
+  echo "cmux is not installed or not on PATH." >&2
+  exit 1
+fi
+
+if [[ -z "${CMUX_WORKSPACE_ID:-}" || -z "${CMUX_SURFACE_ID:-}" ]]; then
+  echo "Run this script inside the cmux pane you want to split." >&2
+  exit 1
+fi
+
+pane_output="$(cmux list-panes --workspace "$CMUX_WORKSPACE_ID")"
+pane_count="$(printf '%s\n' "$pane_output" | awk 'NF { count++ } END { print count + 0 }')"
+
+if [[ "$pane_count" -ne 1 ]]; then
+  echo "Expected exactly 1 pane in workspace $CMUX_WORKSPACE_ID, found $pane_count." >&2
+  exit 1
+fi
+
+right_pane="$(printf '%s\n' "$pane_output" | awk '$1 == "*" { print $2; exit } $1 ~ /^pane:/ { print $1; exit }')"
+
+if [[ -z "$right_pane" ]]; then
+  echo "Could not determine the current pane." >&2
+  exit 1
+fi
+
+TOTAL_WIDTH="$(get_local_width)"
+if (( TOTAL_WIDTH <= TARGET_LEFT_WIDTH )); then
+  echo "Pane width $TOTAL_WIDTH is too small for a left pane of $TARGET_LEFT_WIDTH columns." >&2
+  exit 1
+fi
+
+split_output="$(cmux new-split left --workspace "$CMUX_WORKSPACE_ID" --surface "$CMUX_SURFACE_ID")"
+left_surface="$(printf '%s\n' "$split_output" | awk '{ print $2; exit }')"
+
+if [[ -z "$left_surface" || ! "$left_surface" =~ ^surface: ]]; then
+  echo "Could not determine the new left surface from: $split_output" >&2
+  exit 1
+fi
+
+left_pane="$(cmux list-panes --workspace "$CMUX_WORKSPACE_ID" | awk -v right_pane="$right_pane" '{ for (i = 1; i <= NF; i++) if ($i ~ /^pane:/ && $i != right_pane) { print $i; exit } }')"
+
+if [[ -z "$left_pane" ]]; then
+  echo "Could not determine the new left pane." >&2
+  exit 1
+fi
+
+cmux focus-pane --workspace "$CMUX_WORKSPACE_ID" --pane "$right_pane" >/dev/null
+
+resize_instant
+
+current_dir_name="$(basename "$PWD")"
+right_tab_label="Helix - $current_dir_name"
+cmux rename-workspace --workspace "$CMUX_WORKSPACE_ID" "$current_dir_name" >/dev/null
+cmux rename-tab --workspace "$CMUX_WORKSPACE_ID" --surface "$CMUX_SURFACE_ID" "$right_tab_label" >/dev/null
+
+cmux send --workspace "$CMUX_WORKSPACE_ID" --surface "$left_surface" "clear && pi" >/dev/null
+cmux send-key --workspace "$CMUX_WORKSPACE_ID" --surface "$left_surface" Enter >/dev/null
+cmux send --workspace "$CMUX_WORKSPACE_ID" --surface "$CMUX_SURFACE_ID" "clear && hx ." >/dev/null
+cmux send-key --workspace "$CMUX_WORKSPACE_ID" --surface "$CMUX_SURFACE_ID" Enter >/dev/null
+
+echo "Created cmux split with a left pane width of about $TARGET_LEFT_WIDTH columns, renamed the workspace to '$current_dir_name', renamed the right tab to '$right_tab_label', started pi on the left and hx . on the right."

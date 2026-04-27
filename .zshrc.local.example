@@ -1,0 +1,7 @@
+# Copy to ~/.zshrc.local and keep it out of git.
+
+# Secrets
+# export OPENAI_API_KEY="your-key-here"
+
+# Machine-specific overrides
+# export PATH="$HOME/.local/bin:$PATH"
