@@ -26,3 +26,42 @@ name = "markdown"
 auto-format = true
 language-servers = ["marksman"]
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
+
+[[language]]
+name = "go"
+auto-format = true
+formatter = { command = "gofumpt" }
+
+[[language]]
+name = "bash"
+auto-format = true
+formatter = { command = "shfmt" }
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "json"] }
+
+[[language]]
+name = "javascript"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "babel"] }
+
+[[language]]
+name = "html"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "html"] }
+
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = "prettier", args = ["--parser", "css"] }
+
+[[language]]
+name = "sql"
+auto-format = true
+formatter = { command = "sql-formatter" }
+
+[[language]]
+name = "swift"
+auto-format = true
