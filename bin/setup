@@ -38,6 +38,7 @@ mkdir -p \
 
 # Link tracked configs into place.
 link_file "$REPO_ROOT/.zshrc" "$HOME/.zshrc"
+link_file "$REPO_ROOT/.dprint.json" "$HOME/.dprint.json"
 link_file "$REPO_ROOT/.config/ghostty/config" "$HOME/.config/ghostty/config"
 link_file "$REPO_ROOT/.config/helix/config.toml" "$HOME/.config/helix/config.toml"
 link_file "$REPO_ROOT/.config/helix/languages.toml" "$HOME/.config/helix/languages.toml"
@@ -62,9 +63,11 @@ fi
 # Install required Homebrew packages.
 typeset -a missing_brew_packages=()
 have_cmd colima || missing_brew_packages+=(colima)
+have_cmd dprint || missing_brew_packages+=(dprint)
 have_cmd git || missing_brew_packages+=(git)
 have_cmd hx || missing_brew_packages+=(helix)
 have_cmd lazygit || missing_brew_packages+=(lazygit)
+have_cmd marksman || missing_brew_packages+=(marksman)
 have_cmd wget || missing_brew_packages+=(wget)
 
 if (( ${#missing_brew_packages[@]} > 0 )); then

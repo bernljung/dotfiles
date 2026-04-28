@@ -19,6 +19,9 @@ Main Zsh configuration. It sets Helix as the editor, defines aliases, adds toolc
 #### `.zshrc.local.example`
 Example local overrides file. Copy it to `~/.zshrc.local` for secrets and machine-specific settings.
 
+#### `.dprint.json`
+Dprint configuration for Markdown formatting.
+
 ### Git
 
 #### `.gitconfig`
@@ -33,7 +36,7 @@ Global Git ignore rules for machine-local and generated files.
 Main Helix configuration. It sets the theme, keybindings, editor behavior, and cursor settings.
 
 #### `.config/helix/languages.toml`
-Helix language-specific configuration. It currently contains the C# language server and debugger setup.
+Helix language-specific configuration. It contains the C# language server and debugger setup plus Markdown formatting via dprint and the Marksman language server.
 
 #### `.ideavimrc`
 IdeaVim configuration for JetBrains IDEs.
@@ -70,7 +73,7 @@ Testcontainers client configuration.
 Workspace bootstrap script for `cmux`. It splits the current workspace, sizes the left pane to a target width, renames the workspace and tab from the current directory, then starts `pi` on the left and `hx .` on the right.
 
 #### `bin/setup`
-Machine bootstrap script. It creates required config directories, symlinks the tracked configs into `~`, installs Homebrew if needed, installs Git, Helix, Lazygit, and wget, installs .NET SDK 8 and 10 into `~/.dotnet`, installs Pi, installs `git:github.com/leblancfg/pi-ansi-themes`, and links the tracked Pi agent config and skills into `~/.pi`.
+Machine bootstrap script. It creates required config directories, symlinks the tracked configs into `~`, installs Homebrew if needed, installs Colima, dprint, Git, Helix, Lazygit, Marksman, and wget, installs .NET SDK 8 and 10 into `~/.dotnet`, installs Pi, installs `git:github.com/leblancfg/pi-ansi-themes`, and links the tracked Pi agent config and skills into `~/.pi`.
 
 ## Setup
 
@@ -83,6 +86,7 @@ bin/setup
 That will link:
 
 - `~/.zshrc`
+- `~/.dprint.json`
 - `~/.config/ghostty/config`
 - `~/.config/helix/config.toml`
 - `~/.config/helix/languages.toml`

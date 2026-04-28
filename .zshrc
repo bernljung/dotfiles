@@ -12,10 +12,10 @@ export VISUAL=hx
 # Environment
 export DOTNET_ROOT="$HOME/.dotnet"
 export GOPATH="$HOME/go"
+export DOTFILES_DIR="$HOME/Projects/Private/dotfiles"
 
 # Repo location
 ZSHRC_SOURCE="${${(%):-%x}:A}"
-DOTFILES_DIR="${ZSHRC_SOURCE:h}"
 
 path_prepend_if_dir() {
   local dir="$1"
