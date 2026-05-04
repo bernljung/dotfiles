@@ -1,9 +1,9 @@
 {
-  "defaultModel": "gpt-5.4",
-  "defaultProvider": "github-copilot",
+  "defaultModel": "qwen3.6-35b",
+  "defaultProvider": "lmstudio",
   "defaultThinkingLevel": "medium",
-  "lastChangelogVersion": "0.70.5",
-  "theme": "ansi-dark",
+  "lastChangelogVersion": "0.72.1",
+  "theme": "ansi-light",
   "packages": [
     "git:github.com/leblancfg/pi-ansi-themes"
   ]
