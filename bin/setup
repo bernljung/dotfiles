@@ -48,6 +48,14 @@ link_file "$REPO_ROOT/.pi/agent/models.json" "$HOME/.pi/agent/models.json"
 link_file "$REPO_ROOT/.pi/skills/grill-me/SKILL.md" "$HOME/.pi/skills/grill-me/SKILL.md"
 link_file "$REPO_ROOT/Library/Application Support/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
 
+# Link Ghostty themes.
+mkdir -p "$HOME/.config/ghostty/themes"
+for theme in "$REPO_ROOT/themes/ghostty/"*; do
+  name="$(basename "$theme")"
+  ln -sfn "$theme" "$HOME/.config/ghostty/themes/$name"
+  echo "Linked $HOME/.config/ghostty/themes/$name -> $theme"
+done
+
 # Install Homebrew if it is not already available.
 if ! have_cmd brew; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
