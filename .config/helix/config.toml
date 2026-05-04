@@ -1,4 +1,5 @@
-theme = "solarized_dark"
+# theme = "solarized_dark"
+theme = "everforest_dark"
 
 [keys.normal]
 "å" = { d = "goto_prev_diag", D = "goto_first_diag", f = "goto_prev_function", t = "goto_prev_class", a = "goto_prev_parameter", c = "goto_prev_comment", T = "goto_prev_test", p = "goto_prev_paragraph", g = "goto_prev_change", G = "goto_first_change", space = "add_newline_above" }
@@ -6,7 +7,6 @@ theme = "solarized_dark"
 esc = ["collapse_selection", "keep_primary_selection"]
 C-r = ":reload-all"
 C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
-# "ó" = "repeat_last_motion"
 "œ" = "expand_selection"
 "ı" = "shrink_selection"
 "π" = "select_prev_sibling"
@@ -16,6 +16,9 @@ C-g = [":new", ":insert-output lazygit", ":buffer-close!", ":redraw"]
 line-number = "relative"
 mouse = false
 bufferline = "never"
+
+[editor.soft-wrap]
+enable = true
 
 [editor.cursor-shape]
 insert = "bar"

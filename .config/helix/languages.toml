@@ -24,7 +24,6 @@ args = { processId = "{0}" }
 [[language]]
 name = "markdown"
 auto-format = true
-language-servers = ["marksman"]
 formatter = { command = "dprint", args = ["fmt", "--stdin", "md"] }
 
 [[language]]
