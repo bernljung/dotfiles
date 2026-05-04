@@ -41,6 +41,9 @@ Helix language-specific configuration. It contains the C# language server and de
 #### `.config/zed/keymap.json`
 Helix-style keymap for Zed. Adds Helix "global" keybindings (space menu, goto menu, window management, debug menu, diagnostics navigation, etc.) on top of Zed's built-in helix_mode.
 
+#### `.config/zed/tasks.json`
+Zed tasks configuration. Includes a Telescope-style file finder (`file_finder`) and fulltext search (`fulltext_search`) using [television](https://github.com/alexpasmantier/television). Triggered via `cmd-p` and `space f`, opens a centered terminal with `tv files` / `tv text` that opens selected results in Zed.
+
 #### `.config/zed/settings.json`
 Zed editor settings. Sets Helix mode, VSCode base keymap, fonts (JetBrains Mono NL), themes (Catppuccin Mocha / Everforest Dark Hard / One Light), edit predictions via Ollama, Pi agent server, which-key, and panel docks.
 

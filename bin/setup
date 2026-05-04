@@ -75,16 +75,20 @@ fi
 typeset -a missing_brew_packages=()
 have_cmd colima || missing_brew_packages+=(colima)
 have_cmd dprint || missing_brew_packages+=(dprint)
+have_cmd fd || missing_brew_packages+=(fd)
 have_cmd git || missing_brew_packages+=(git)
 have_cmd gofumpt || missing_brew_packages+=(gofumpt)
 have_cmd hx || missing_brew_packages+=(helix)
 have_cmd lazygit || missing_brew_packages+=(lazygit)
 have_cmd marksman || missing_brew_packages+=(marksman)
 have_cmd prettier || missing_brew_packages+=(prettier)
+have_cmd ripgrep || missing_brew_packages+=(ripgrep)
 have_cmd shfmt || missing_brew_packages+=(shfmt)
 have_cmd sql-formatter || missing_brew_packages+=(sql-formatter)
 have_cmd swift-format || missing_brew_packages+=(swift-format)
+have_cmd tv || missing_brew_packages+=(television)
 have_cmd wget || missing_brew_packages+=(wget)
+have_cmd bat || missing_brew_packages+=(bat)
 
 if (( ${#missing_brew_packages[@]} > 0 )); then
   brew install "${missing_brew_packages[@]}"

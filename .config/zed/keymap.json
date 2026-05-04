@@ -14,7 +14,7 @@
     "bindings": {
       "space": null, // Disable the default action vim::WrappingRight
       // --- File / Buffer / Picker ---
-      "space f": "file_finder::Toggle", // Open file picker
+      "space f": ["task::Spawn", { "task_name": "file_finder", "reveal_target": "center" }], // Open telescope-style file finder
       "space b": "tab_switcher::Toggle", // Open recently opened files picker
       "space e": "project_panel::ToggleFocus", // Open file explorer in workspace root
       "space j": "pane::GoBack", // Open jumplist picker (nearest: nav back)
@@ -172,6 +172,12 @@
     "context": "Workspace",
     "bindings": {
       "ctrl-shift-p": "command_palette::Toggle",
+
+      // Telescope-style file finder via television
+      "cmd-p": [
+        "task::Spawn",
+        { "task_name": "file_finder", "reveal_target": "center" }
+      ],
       "ctrl-p": "file_finder::Toggle",
 
       // Toggle panels
