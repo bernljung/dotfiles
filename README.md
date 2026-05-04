@@ -38,6 +38,9 @@ Main Helix configuration. It sets the theme, keybindings, editor behavior, and c
 #### `.config/helix/languages.toml`
 Helix language-specific configuration. It contains the C# language server and debugger setup, Markdown formatting via dprint and Marksman, and formatter configuration for Go, Bash, JSON, JavaScript, HTML, CSS, SQL, and Swift.
 
+#### `.config/zed/keymap.json`
+Helix-style keymap for Zed. Adds Helix "global" keybindings (space menu, goto menu, window management, debug menu, diagnostics navigation, etc.) on top of Zed's built-in helix_mode.
+
 #### `.ideavimrc`
 IdeaVim configuration for JetBrains IDEs.
 
@@ -90,6 +93,7 @@ That will link:
 - `~/.config/ghostty/config`
 - `~/.config/helix/config.toml`
 - `~/.config/helix/languages.toml`
+- `~/.config/zed/keymap.json`
 - `~/.pi/agent/AGENTS.md`
 - `~/.pi/agent/settings.json`
 - `~/.pi/agent/models.json`
@@ -100,6 +104,7 @@ It also creates supporting directories such as:
 
 - `~/.config/ghostty`
 - `~/.config/helix`
+- `~/.config/zed`
 - `~/.dotnet`
 - `~/.dotnet/tools`
 - `~/.pi/agent`
@@ -116,6 +121,7 @@ It also creates supporting directories such as:
 
 ### Editors
 - Helix uses `.config/helix/config.toml` and `.config/helix/languages.toml`.
+- Zed uses `.config/zed/keymap.json`.
 - JetBrains IdeaVim uses `.ideavimrc`.
 - Neovim config is still present in `.init.vim`.
 

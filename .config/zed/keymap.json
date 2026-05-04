@@ -1,0 +1,243 @@
+// Helix-style keymap for Zed
+//
+// Zed's built-in helix_mode handles in-buffer motions/editing.
+// This adds the Helix "global" keybindings: space menu, goto menu,
+// window management, debug menu, diagnostics navigation, etc.
+//
+// Reference: https://docs.helix-editor.com/keymap.html
+[
+  // ============================================================
+  // SPACE MENU — Helix Normal Mode
+  // ============================================================
+  {
+    "context": "Editor && vim_mode == helix_normal && !menu",
+    "bindings": {
+      "space": null, // Disable the default action vim::WrappingRight
+      // --- File / Buffer / Picker ---
+      "space f": "file_finder::Toggle", // Open file picker
+      "space b": "tab_switcher::Toggle", // Open buffer picker
+      "space e": "project_panel::ToggleFocus", // Open file explorer in workspace root
+      "space j": "pane::GoBack", // Open jumplist picker (nearest: nav back)
+
+      // --- Symbol Pickers ---
+      "space s": "outline::Toggle", // Open symbol picker (document)
+      "space shift-s": "project_symbols::Toggle", // Open workspace symbol picker
+
+      // --- Diagnostics ---
+      "space d": "diagnostics::Deploy", // Open diagnostic picker
+      "space shift-d": "diagnostics::Deploy", // Open workspace diagnostic picker
+
+      // --- Git ---
+      "space g": "git_panel::ToggleFocus", // Open changed file picker
+
+      // --- Code Actions / LSP ---
+      "space a": "editor::ToggleCodeActions", // Perform code action
+      "space k": "editor::Hover", // Show docs for item under cursor
+      "space r": "editor::Rename", // Rename symbol
+      "space h": "editor::SelectAllMatches", // Select symbol references
+
+      // --- Comment ---
+      "space c": "editor::ToggleComments", // Comment/uncomment selections
+
+      // --- Yank / Paste (system clipboard) ---
+      "space y": "editor::Copy", // Yank selections to clipboard
+      "space shift-y": "editor::Copy", // Yank main selection to clipboard
+      "space p": "editor::Paste", // Paste clipboard after selections
+      "space shift-p": "editor::Paste", // Paste clipboard before selections
+      "space shift-r": "editor::Paste", // Replace selections by clipboard content
+
+      // --- Search ---
+      "space /": "pane::DeploySearch", // Global search in workspace folder
+
+      // --- Command palette (Helix :) ---
+      ":": "command_palette::Toggle", // Open command palette
+      "space ?": "command_palette::Toggle", // Open command palette (alias)
+
+      // --- Debug (space shift-g prefix, Helix experimental) ---
+      "space shift-g l": "debugger::Start", // Launch debug target
+      "space shift-g r": "debugger::Rerun", // Restart debugging session
+      "space shift-g b": "debugger::ToggleEnableBreakpoint", // Toggle breakpoint
+      "space shift-g c": "debugger::Continue", // Continue program execution
+      "space shift-g h": "debugger::Pause", // Pause program execution
+      "space shift-g i": "debugger::StepInto", // Step in
+      "space shift-g o": "debugger::StepOut", // Step out
+      "space shift-g n": "debugger::StepOver", // Step to next
+      "space shift-g e": "debugger::Stop", // End debug session
+      "space shift-g s": "debugger::ToggleSessionPicker", // Switch debug session
+
+      // --- Window / Pane (space w prefix) ---
+      "space w v": "pane::SplitRight",
+      "space w s": "pane::SplitDown",
+      "space w h": "workspace::ActivatePaneLeft",
+      "space w l": "workspace::ActivatePaneRight",
+      "space w k": "workspace::ActivatePaneUp",
+      "space w j": "workspace::ActivatePaneDown",
+      "space w q": "pane::CloseActiveItem",
+      "space w c": "pane::CloseActiveItem",
+      "space w o": "workspace::CloseInactiveTabsAndPanes",
+
+      // Also support ctrl-w prefix (Helix alternate)
+      "ctrl-w v": "pane::SplitRight",
+      "ctrl-w s": "pane::SplitDown",
+      "ctrl-w h": "workspace::ActivatePaneLeft",
+      "ctrl-w l": "workspace::ActivatePaneRight",
+      "ctrl-w k": "workspace::ActivatePaneUp",
+      "ctrl-w j": "workspace::ActivatePaneDown",
+      "ctrl-w q": "pane::CloseActiveItem",
+      "ctrl-w c": "pane::CloseActiveItem",
+      "ctrl-w o": "workspace::CloseInactiveTabsAndPanes",
+
+      // --- Goto menu (g prefix) ---
+      "g d": "editor::GoToDefinition",
+      "g y": "editor::GoToTypeDefinition",
+      "g r": "editor::FindAllReferences",
+      "g i": "editor::GoToImplementation",
+      "g a": "agent::ToggleFocus",
+      "g n": "pane::ActivateNextItem",
+      "g p": "pane::ActivatePreviousItem",
+      "g o": "editor::ToggleHunkDiff",
+
+      // --- Jumplist (ctrl-o back, ctrl-i forward) ---
+      "ctrl-o": "pane::GoBack",
+      "ctrl-i": "pane::GoForward",
+
+      // --- Bracket navigation (] / [ prefix) ---
+      "] d": "editor::GoToDiagnostic",
+      "[ d": "editor::GoToPreviousDiagnostic",
+      "] g": "editor::GoToHunk",
+      "[ g": "editor::GoToPreviousHunk",
+
+      // --- Save ---
+      "ctrl-s": "workspace::Save",
+
+      // --- Terminal ---
+      "space t": "terminal_panel::ToggleFocus",
+
+      // --- Multi-cursor ---
+      "shift-c": "editor::AddSelectionBelow",
+      "alt-c": "editor::AddSelectionAbove",
+
+      // --- Undo / Redo ---
+      "u": "editor::Undo",
+      "shift-u": "editor::Redo",
+    },
+  },
+
+  // ============================================================
+  // SPACE MENU — Helix Select Mode (visual)
+  // ============================================================
+  {
+    "context": "Editor && vim_mode == helix_select && !menu",
+    "bindings": {
+      "space a": "editor::ToggleCodeActions",
+      "space c": "editor::ToggleComments",
+      "space y": "editor::Copy",
+      "space p": "editor::Paste",
+      "space /": "pane::DeploySearch",
+      "space h": "editor::SelectAllMatches",
+      "shift-c": "editor::AddSelectionBelow",
+      "alt-c": "editor::AddSelectionAbove",
+      "ctrl-o": "pane::GoBack",
+      "ctrl-i": "pane::GoForward",
+    },
+  },
+
+  // ============================================================
+  // GLOBAL / WORKSPACE — always available
+  // ============================================================
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-shift-p": "command_palette::Toggle",
+      "ctrl-p": "file_finder::Toggle",
+
+      // Toggle panels
+      "ctrl-shift-a": "agent::ToggleFocus",
+      "ctrl-shift-e": "project_panel::ToggleFocus",
+      "ctrl-shift-g": "git_panel::ToggleFocus",
+      "ctrl-shift-d": "diagnostics::Deploy",
+      "ctrl-`": "terminal_panel::ToggleFocus",
+
+      // Debug (F-key shortcuts — always available)
+      "f5": "debugger::Continue",
+      "shift-f5": "debugger::Stop",
+      "f9": "debugger::ToggleEnableBreakpoint",
+      "f10": "debugger::StepOver",
+      "f11": "debugger::StepInto",
+      "shift-f11": "debugger::StepOut",
+
+      // Tasks
+      "ctrl-shift-b": "task::Spawn",
+    },
+  },
+  {
+    "context": "GitPanel",
+    "bindings": {
+      "cmd-p": "git::Push",
+    },
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "ctrl-g up": "git::Push",
+    },
+  },
+  {
+    "context": "AgentPanel && acp_thread",
+    "bindings": {
+      "cmd-n": "agent::NewThread",
+      "cmd-shift-n": "agent::NewExternalAgentThread",
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-o": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false,
+        },
+      ],
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "alt-cmd-o": [
+        "projects::OpenRecent",
+        {
+          "create_new_window": false,
+        },
+      ],
+    },
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "alt-cmd-o": "project_symbols::Toggle",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-t": "project_symbols::Toggle",
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-enter": "editor::ToggleCodeActions",
+    },
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "cmd-.": "editor::ToggleCodeActions",
+    },
+  },
+  {
+    "unbind": {
+      "cmd-o": "workspace::Open",
+    },
+  },
+]
