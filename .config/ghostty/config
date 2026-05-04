@@ -8,7 +8,7 @@
 # =========================
 # Catppuccin with automatic system light/dark switching
 # Run 'ghostty +list-themes' to verify exact theme names available
-theme = dark:everforest-dark-soft,light:everforest-light-soft
+theme = everforest-dark-soft
 
 # Custom color adjustments (optional - comment out if using theme)
 # background = 1e1e2e
