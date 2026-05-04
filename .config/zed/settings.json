@@ -1,0 +1,87 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "base_keymap": "VSCode",
+  "agent_buffer_font_size": 13.0,
+  "agent_ui_font_size": 13.0,
+  "cli_default_open_behavior": "new_window",
+  "search": {
+    "button": true,
+  },
+  "diagnostics": {
+    "button": true,
+  },
+  "status_bar": {
+    "cursor_position_button": true,
+    "active_language_button": true,
+  },
+  "project_panel": {
+    "dock": "right",
+  },
+  "outline_panel": {
+    "dock": "right",
+  },
+  "collaboration_panel": {
+    "dock": "right",
+  },
+  "git_panel": {
+    "tree_view": true,
+    "dock": "right",
+  },
+  "edit_predictions": {
+    "provider": "ollama",
+  },
+  "diff_view_style": "unified",
+  "agent_servers": {
+    "pi-acp": {
+      "type": "registry",
+    },
+  },
+  "agent": {
+    "dock": "left",
+    "default_model": {
+      "provider": "lmstudio",
+      "model": "qwen/qwen3.6-35b-a3b",
+      "enable_thinking": false,
+    },
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "helix_mode": true,
+  "ui_font_weight": 400.0,
+  "ui_font_family": "JetBrains Mono NL",
+  "buffer_font_weight": 350.0,
+  "buffer_font_family": "JetBrains Mono NL",
+  // base_keymap removed — use Zed defaults so helix_mode has its foundation
+  "vim": {
+    "toggle_relative_line_numbers": true,
+  },
+  "max_tabs": 1,
+  "telemetry": {
+    "diagnostics": true,
+  },
+  "tab_bar": {
+    // Whether or not to show the tab bar in the editor
+    "show": false,
+  },
+  "vim_mode": false,
+  "ui_font_size": 13.0,
+  "buffer_font_size": 13.0,
+  "icon_theme": "Catppuccin Mocha",
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Everforest Dark Hard",
+  },
+  "which_key": {
+    "enabled": true,
+    "delay_ms": 100,
+  },
+  "context_servers": {},
+}

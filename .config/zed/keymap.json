@@ -15,7 +15,7 @@
       "space": null, // Disable the default action vim::WrappingRight
       // --- File / Buffer / Picker ---
       "space f": "file_finder::Toggle", // Open file picker
-      "space b": "tab_switcher::Toggle", // Open buffer picker
+      "space b": "tab_switcher::Toggle", // Open recently opened files picker
       "space e": "project_panel::ToggleFocus", // Open file explorer in workspace root
       "space j": "pane::GoBack", // Open jumplist picker (nearest: nav back)
 
@@ -95,7 +95,7 @@
       "g a": "agent::ToggleFocus",
       "g n": "pane::ActivateNextItem",
       "g p": "pane::ActivatePreviousItem",
-      "g o": "editor::ToggleHunkDiff",
+      "g o": "editor::ToggleSelectedDiffHunks",
 
       // --- Jumplist (ctrl-o back, ctrl-i forward) ---
       "ctrl-o": "pane::GoBack",
@@ -120,6 +120,29 @@
       // --- Undo / Redo ---
       "u": "editor::Undo",
       "shift-u": "editor::Redo",
+
+      // --- å / ä navigation (Helix-style: å = back, ä = forward) ---
+      // Diagnostics
+      "å d": "editor::GoToPreviousDiagnostic",
+      "ä d": "editor::GoToDiagnostic",
+      // Hunks / git changes
+      "å g": "editor::GoToPreviousHunk",
+      "ä g": "editor::GoToHunk",
+      // Bookmarks
+      "å b": "editor::GoToPreviousBookmark",
+      "ä b": "editor::GoToNextBookmark",
+      // Symbols
+      "å s": "editor::GoToPreviousSymbol",
+      "ä s": "editor::GoToNextSymbol",
+      // References
+      "å r": "editor::GoToPreviousReference",
+      "ä r": "editor::GoToNextReference",
+      // Document highlights
+      "å h": "editor::GoToPreviousDocumentHighlight",
+      "ä h": "editor::GoToNextDocumentHighlight",
+      // Newline insertion (Helix: add_newline_above/below)
+      "å space": "editor::NewlineAbove",
+      "ä space": "editor::NewlineBelow",
     },
   },
 

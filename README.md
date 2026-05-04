@@ -41,6 +41,9 @@ Helix language-specific configuration. It contains the C# language server and de
 #### `.config/zed/keymap.json`
 Helix-style keymap for Zed. Adds Helix "global" keybindings (space menu, goto menu, window management, debug menu, diagnostics navigation, etc.) on top of Zed's built-in helix_mode.
 
+#### `.config/zed/settings.json`
+Zed editor settings. Sets Helix mode, VSCode base keymap, fonts (JetBrains Mono NL), themes (Catppuccin Mocha / Everforest Dark Hard / One Light), edit predictions via Ollama, Pi agent server, which-key, and panel docks.
+
 #### `.ideavimrc`
 IdeaVim configuration for JetBrains IDEs.
 
@@ -94,6 +97,7 @@ That will link:
 - `~/.config/helix/config.toml`
 - `~/.config/helix/languages.toml`
 - `~/.config/zed/keymap.json`
+- `~/.config/zed/settings.json`
 - `~/.pi/agent/AGENTS.md`
 - `~/.pi/agent/settings.json`
 - `~/.pi/agent/models.json`
@@ -121,7 +125,7 @@ It also creates supporting directories such as:
 
 ### Editors
 - Helix uses `.config/helix/config.toml` and `.config/helix/languages.toml`.
-- Zed uses `.config/zed/keymap.json`.
+- Zed uses `.config/zed/keymap.json` and `.config/zed/settings.json`.
 - JetBrains IdeaVim uses `.ideavimrc`.
 - Neovim config is still present in `.init.vim`.
 
